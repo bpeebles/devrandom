@@ -8,6 +8,8 @@ In general, either fllows the Python standard library ```random``` or
 
 import math
 
+LOG_OF_2_TIMES_8 = math.log(2)*8
+
 def random(n, allow_pseudo=False):
     """Return a string of `n` random bytes suitable for cryptographic use.
 
@@ -32,7 +34,7 @@ def randint(a, b, allow_pseudo=False):
     span = b - a + 1
     if span == 1:
         return a
-    num_bytes = int(math.floor(math.sqrt(span)))
+    num_bytes = int(math.ceil(math.log(span)/LOG_OF_2_TIMES_8))
     rand_str = random(num_bytes, allow_pseudo)
     rand_int = 0
     for c in rand_str:

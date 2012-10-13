@@ -1,1 +1,3 @@
-v<version>, <date> -- Initial release.
+v0.1.1, 2012-10-13 -- Actually use correct number of bytes.
+
+v0.1.0, 2012-10-11 -- Initial release.
