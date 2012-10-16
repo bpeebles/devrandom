@@ -10,14 +10,16 @@ import math
 
 LOG_OF_2_TIMES_8 = math.log(2)*8
 
-def random(n, allow_pseudo=False):
+def random(n, allow_pseudo=False, path=None):
     """Return a string of `n` random bytes suitable for cryptographic use.
 
     Block if there is not enough entropy. If `allow_pseudo` is True, fallback to
-    ```os.urandom```, otherwise raise NotImplementedError."""
+    ``os.urandom``, otherwise raise NotImplementedError.
+    """
 
+    path = path or '/dev/random'
     try:
-        f = open('/dev/random', 'r', buffering=0)
+        f = open(path, 'r', buffering=0)
     except IOError:
         if allow_pseudo:
             import os
@@ -26,7 +28,7 @@ def random(n, allow_pseudo=False):
             raise NotImplementedError
     return f.read(n)
 
-def randint(a, b, allow_pseudo=False):
+def randint(a, b, allow_pseudo=False, path=None):
     """Return a random integer N such that a <= N <= b.
     """
 
@@ -35,7 +37,7 @@ def randint(a, b, allow_pseudo=False):
     if span == 1:
         return a
     num_bytes = int(math.ceil(math.log(span)/LOG_OF_2_TIMES_8))
-    rand_str = random(num_bytes, allow_pseudo)
+    rand_str = random(num_bytes, allow_pseudo=allow_pseudo, path=path)
     rand_int = 0
     for c in rand_str:
         rand_int <<= 8
